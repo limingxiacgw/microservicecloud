@@ -18,7 +18,6 @@ public class MyselfRuleLmx extends AbstractLoadBalancerRule {
     private int total = 0;
     // 存储当前是那个机器
     private int currentIndex = 0;
-
     /**
      * Randomly choose from all living servers
      */
@@ -27,7 +26,6 @@ public class MyselfRuleLmx extends AbstractLoadBalancerRule {
             return null;
         }
         Server server = null;
-
         while (server == null) {
             if (Thread.interrupted()) {
                 return null;
@@ -42,7 +40,6 @@ public class MyselfRuleLmx extends AbstractLoadBalancerRule {
                  */
                 return null;
             }
-
             if (total < 5) {
                 server = upList.get(currentIndex);
                 total++;
@@ -53,7 +50,6 @@ public class MyselfRuleLmx extends AbstractLoadBalancerRule {
                     currentIndex = 0;
                 }
             }
-
             if (server == null) {
                 /*
                  * The only time this should happen is if the server list were
@@ -63,11 +59,9 @@ public class MyselfRuleLmx extends AbstractLoadBalancerRule {
                 Thread.yield();
                 continue;
             }
-
             if (server.isAlive()) {
                 return (server);
             }
-
             // Shouldn't actually happen.. but must be transient or a bug.
             server = null;
             Thread.yield();
@@ -75,7 +69,6 @@ public class MyselfRuleLmx extends AbstractLoadBalancerRule {
         return server;
 
     }
-
 
     @Override
     public Server choose(Object key) {

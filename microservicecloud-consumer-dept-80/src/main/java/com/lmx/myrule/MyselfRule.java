@@ -16,8 +16,7 @@ public class MyselfRule {
      */
     @Bean
     public IRule myRule(){
+        //return new RandomRule();
         return new MyselfRuleLmx();
     }
-
-
 }
