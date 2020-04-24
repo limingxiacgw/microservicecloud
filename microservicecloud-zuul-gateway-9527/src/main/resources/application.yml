@@ -1,0 +1,35 @@
+server:
+  port: 9527
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml  #mybatis配置文件所在路径
+  type-aliases-package: com.lmx.springcloud.entities  #所有entity别名类所在包
+  mapper-locations:
+    classpath:mybatis/mapper/**/*.xml  #mapper迎神文件
+
+spring:
+  application:
+    name: microservicecloud-zuul-gateway
+
+eureka:
+  client: #客户端注册进eureka服务列表内
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: gateway-9527.com #自定义hystrix相关的服务名称信息
+    prefer-ip-address: true #访问路径可以显示ip地址
+
+
+info:
+  app.name: lmx-microservicecloud
+  company.name: www.baidu.com
+  build.artifactId: ${project.artifactId}
+  #build.version: $project.version$
+  build.version: ${project.version}
+
+zuul:
+  routes:
+    mydept.serviceId: microservicecloud-dept #要代理的微服务
+    mydept.path: /mydept/**  #代理名称
+  ignored-services: microservicecloud-dept # 忽略当前服务使用代理名称    忽略所有用 *
+  prefix: /lmx # 微服务前要统一加的前缀
